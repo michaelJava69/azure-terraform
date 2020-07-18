@@ -67,13 +67,26 @@ resource "azurerm_network_security_group" "web-windows-vm-nsg" {
   }
 }
 
+
+
 # Associate the web NSG with the Subnet
-resource "azurerm_subnet_network_security_group_association" "web-windows-vm-nsg-association" {
+
+# resource "azurerm_subnet_network_security_group_association" "web-windows-vm-nsg-association" {
+#  depends_on=[azurerm_network_security_group.web-windows-vm-nsg]
+
+#  subnet_id                 = azurerm_subnet.network-subnet.id
+#  network_security_group_id = azurerm_network_security_group.web-windows-vm-nsg.id
+# }
+
+
+resource "azurerm_network_interface_security_group_association" "web-windows-vm-nsg-association" {
   depends_on=[azurerm_network_security_group.web-windows-vm-nsg]
 
-  subnet_id                 = azurerm_subnet.network-subnet.id
+  # network_interface_id    = azurerm_network_interface.example.id
+  network_interface_id      = azurerm_network_interface.web-windows-vm-nic.id
   network_security_group_id = azurerm_network_security_group.web-windows-vm-nsg.id
 }
+
 
 # Get a Static Public IP for web
 resource "azurerm_public_ip" "web-windows-vm-ip" {
