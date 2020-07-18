@@ -62,14 +62,28 @@ resource "azurerm_network_security_group" "web-linux-vm-nsg" {
   }
 }
 
-# Associate the web NSG with the subnet
 
-#resource "azurerm_subnet_network_security_group_association" "web-linux-vm-nsg-association" {
+# Associate the web NSG with the subnet
+#--------------------------------------
+
+# resource "azurerm_subnet_network_security_group_association" "web-linux-vm-nsg-association" {
 #  depends_on=[azurerm_network_security_group.web-linux-vm-nsg]
-#
+
 #  subnet_id                 = azurerm_subnet.network-subnet.id
 #  network_security_group_id = azurerm_network_security_group.web-linux-vm-nsg.id
-#}
+# }
+
+
+resource "azurerm_network_interface_security_group_association" "web-linux-vm-nsg-association" {
+  depends_on=[azurerm_network_security_group.web-linux-vm-nsg]
+
+
+  # network_interface_id    = azurerm_network_interface.example.id
+  network_interface_id      = azurerm_network_interface.web-linux-vm-nic.id
+  network_security_group_id = azurerm_network_security_group.web-linux-vm-nsg.id
+}
+
+
 
 # Get a Static Public IP
 resource "azurerm_public_ip" "web-linux-vm-ip" {
