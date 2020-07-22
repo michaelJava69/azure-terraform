@@ -3,3 +3,6 @@
 This repo deploy a virtual machine with **Windows Server 2019 with IIS (Internet Information Server)** and another virtual machine with **Linux Ubuntu 18.04 with Apache Web Server**.
 
 The code uses AzureRM Provider 2.x
+
+
+Original website for reference  :  https://medium.com/@gmusumeci/how-to-bootstrapping-azure-vms-with-terraform-c8fdaa457836
